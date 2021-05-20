@@ -1,9 +1,15 @@
 // TODO: new game not correctly displaying board size
 
 function GameManager(size, InputManager, Actuator, StorageManager) {
+    console.log("Starting");
     this.inputManager   = new InputManager;
     this.storageManager = new StorageManager;
-    this.size           = this.storageManager.getGameState().size; // Size of the grid
+    try {
+        this.size           = this.storageManager.getGameState().size; // Size of the grid
+    }
+    catch {
+        this.Size       = 4;
+    }
     this.actuator       = new Actuator(this.size);
 
     this.startTiles     = 2;
