@@ -68,6 +68,25 @@ KeyboardInputManager.prototype.listen = function () {
     }
   });
 
+  // Respond to clicking on clickable
+  document.addEventListener("click", function (event) {
+      let target = event.target;
+      if(target.classList.contains("tile-inner")) {
+          target = target.parentElement;
+      }
+      if(target.classList.contains("tile-clickable")) {
+          for(let klass of target.classList) {
+              let match = klass.match(/tile-position-(\d+)-(\d+)/);
+              if(match) {
+                  self.emit("click", {
+                      x: parseInt(match[1]) - 1,
+                      y: parseInt(match[2]) - 1,
+                  });
+              }
+          }
+      }
+  })
+
   // Respond to button presses
   this.bindButtonPress(".retry-button", this.restart);
   this.bindButtonPress(".restart-button", this.restart);
